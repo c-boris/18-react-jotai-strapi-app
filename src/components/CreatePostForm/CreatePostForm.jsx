@@ -50,6 +50,7 @@ export const CreatePostForm = ({ loadPost }) => {
           value={formData.text}
           onChange={handleChange}
         />
+        <br />
         <button type="submit">Submit</button>
       </form>
     </>

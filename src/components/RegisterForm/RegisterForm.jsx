@@ -56,9 +56,9 @@ export const RegisterForm = () => {
 
   return (
     <form action="" onSubmit={handleSubmit}>
-      <input type="text" name='username' placeholder='Pseudo' value={formData.username} onChange={handleChange}/>
-      <input type="email" name='email' placeholder='Email' value={formData.email} onChange={handleChange}/>
-      <input type="password" name='password' placeholder='Mot de passe' value={formData.password} onChange={handleChange}/>
+      <input type="text" name='username' placeholder='Pseudo' value={formData.username} onChange={handleChange}/><br />
+      <input type="email" name='email' placeholder='Email' value={formData.email} onChange={handleChange}/><br />
+      <input type="password" name='password' placeholder='Mot de passe' value={formData.password} onChange={handleChange}/><br />
       <button type="submit">Sign up</button>
     </form>
   )

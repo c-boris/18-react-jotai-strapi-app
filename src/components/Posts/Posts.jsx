@@ -7,9 +7,7 @@ import { tokenAtom } from '../../atoms/atoms';
 export const Posts = () => {
 
   const token = useAtomValue(tokenAtom)
-
-  console.log(token)
-
+  
   const [posts, setPosts] = useState([])
 
   const loadPost = () => {
@@ -33,7 +31,7 @@ export const Posts = () => {
     <>
       {token ? <CreatePostForm loadPost={loadPost} /> : null}
       
-      <h1>Latest tweets :</h1>
+      <h2>Latest tweets :</h2>
       {posts.map( post => 
         <Post key={post.id} data={post}/>)}
     </>

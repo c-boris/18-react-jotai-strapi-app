@@ -54,6 +54,7 @@ export const LoginForm = () => {
         value={formData.identifier}
         onChange={handleChange}
       />
+      <br />
       <input
         type="password"
         name="password"
@@ -61,6 +62,7 @@ export const LoginForm = () => {
         value={formData.password}
         onChange={handleChange}
       />
+      <br />
       <button type="submit">Connexion</button>
     </form>
   );

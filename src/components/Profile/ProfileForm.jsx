@@ -100,6 +100,7 @@ const ProfileForm = () => {
               value={newUsername}
               onChange={(e) => setNewUsername(e.target.value)}
             />
+            <br />
             <button onClick={handleUpdateUsername}>Change username</button>
           </div>
           
@@ -110,6 +111,7 @@ const ProfileForm = () => {
               value={newDescription}
               onChange={(e) => setNewDescription(e.target.value)}
             />
+            <br />
             <button onClick={handleUpdateDescription}>Change description</button>
           </div>
         </div>
