@@ -7,7 +7,7 @@ const ProfileForm = () => {
   const uid = useAtomValue(uidAtom);
   const [user, setUser] = useAtom(userAtom);
   const [newUsername, setNewUsername] = useState('');
-  const [newDescription, setNewDescription] = useState(''); // Ajout de l'état pour la nouvelle description
+  const [newDescription, setNewDescription] = useState('');
 
   const loadData = useCallback(async () => {
     if (!uid) {
@@ -39,7 +39,26 @@ const ProfileForm = () => {
   }, [loadData]);
 
   const handleUpdateUsername = async () => {
-    // Votre code pour mettre à jour le nom d'utilisateur
+    try {
+      const response = await fetch(`http://localhost:1337/api/users/${uid}`, {
+        method: 'put',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: newUsername }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const updatedUserData = { ...user, username: newUsername };
+      setUser(updatedUserData);
+      setNewUsername('');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleUpdateDescription = async () => {
@@ -50,16 +69,16 @@ const ProfileForm = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ description: newDescription }), // Envoyer la nouvelle description
+        body: JSON.stringify({ description: newDescription }),
       });
 
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
       }
 
-      const updatedUserData = { ...user, description: newDescription }; // Mettre à jour la description dans les données utilisateur
+      const updatedUserData = { ...user, description: newDescription };
       setUser(updatedUserData);
-      setNewDescription(''); // Réinitialiser le champ de la nouvelle description
+      setNewDescription('');
     } catch (error) {
       console.error('Error:', error);
     }

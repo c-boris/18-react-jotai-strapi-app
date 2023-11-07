@@ -17,13 +17,13 @@ function App() {
   const setUid = useSetAtom(uidAtom)
 
   useEffect(() => {
-    setToken(Cookies.get('token'))
-    setUid(Cookies.get('uid'))
-  }, [])
+    setToken(Cookies.get('token'));
+    setUid(Cookies.get('uid'));
+  }, [setToken, setUid]);
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar/>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
