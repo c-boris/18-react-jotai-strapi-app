@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue, useAtom } from 'jotai';
 import { userAtom, tokenAtom, uidAtom } from '../../atoms/atoms';
+// import UserPosts from './UserPosts';
 
 const ProfileForm = () => {
   const token = useAtomValue(tokenAtom);
@@ -34,11 +35,7 @@ const ProfileForm = () => {
     }
   }, [token, uid, setUser]);
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  const handleUpdateUsername = async () => {
+  const handleUpdateUserData = async (data) => {
     try {
       const response = await fetch(`http://localhost:1337/api/users/${uid}`, {
         method: 'put',
@@ -46,43 +43,25 @@ const ProfileForm = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: newUsername }),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
       }
 
-      const updatedUserData = { ...user, username: newUsername };
+      const updatedUserData = { ...user, ...data };
       setUser(updatedUserData);
       setNewUsername('');
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  const handleUpdateDescription = async () => {
-    try {
-      const response = await fetch(`http://localhost:1337/api/users/${uid}`, {
-        method: 'put',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ description: newDescription }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-
-      const updatedUserData = { ...user, description: newDescription };
-      setUser(updatedUserData);
       setNewDescription('');
     } catch (error) {
       console.error('Error:', error);
     }
   };
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   return (
     <div>
@@ -101,9 +80,11 @@ const ProfileForm = () => {
               onChange={(e) => setNewUsername(e.target.value)}
             />
             <br />
-            <button onClick={handleUpdateUsername}>Change username</button>
+            <button onClick={() => handleUpdateUserData({ username: newUsername })}>
+              Change username
+            </button>
           </div>
-          
+
           <div>
             <input
               type="text"
@@ -112,10 +93,13 @@ const ProfileForm = () => {
               onChange={(e) => setNewDescription(e.target.value)}
             />
             <br />
-            <button onClick={handleUpdateDescription}>Change description</button>
+            <button onClick={() => handleUpdateUserData({ description: newDescription })}>
+              Change description
+            </button>
           </div>
         </div>
       )}
+      {/* <UserPosts /> */}
     </div>
   );
 };

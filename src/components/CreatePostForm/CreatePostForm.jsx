@@ -3,7 +3,7 @@ import { useAtomValue } from "jotai";
 import { tokenAtom, uidAtom } from "../../atoms/atoms";
 import PropTypes from 'prop-types';
 
-export const CreatePostForm = ({ loadPost }) => {
+export const CreatePostForm = ({ loadPosts }) => {
   const token = useAtomValue(tokenAtom);
   const uid = useAtomValue(uidAtom);
 
@@ -32,7 +32,7 @@ export const CreatePostForm = ({ loadPost }) => {
     })
       .then((response) => response.json())
       .then(
-        () => loadPost(),
+        () => loadPosts(),
         setFormData({ text: "", users_permissions_user: uid })
       )
       .catch((error) => {
@@ -58,5 +58,5 @@ export const CreatePostForm = ({ loadPost }) => {
 };
 
 CreatePostForm.propTypes = {
-  loadPost: PropTypes.func.isRequired,
+  loadPosts: PropTypes.func.isRequired,
 };
